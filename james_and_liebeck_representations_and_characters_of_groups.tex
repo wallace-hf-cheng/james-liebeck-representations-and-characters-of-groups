@@ -1,0 +1,47 @@
+\documentclass[a4paper, 12pt]{article}
+\pagestyle{empty}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsfonts, amssymb, amsmath, amsthm}
+\usepackage{tikz}
+\usepackage{minted}
+
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Image}{Im}
+
+\renewcommand{\Im}{\Image}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\lt}{\left}
+\newcommand{\rt}{\right}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\normalsubgroup}{\lhd}
+\newcommand{\epf}{\hfill \qed}
+
+\begin{document}
+
+\section*{Chapter 1 Groups and Homomorphisms}
+
+\subsection*{Exercise 1}
+
+Assume $H \neq \{1\}$. Let $g_1, g_2 \in G$. Suppose $g_1\vartheta = g_2\vartheta$. Then $(g_1\vartheta)(g_2\vartheta)^{-1}=1$ and thus $(g_1g_2^{-1})\vartheta=1$. Hence $g_1g_2^{-1} \in \Ker(\vartheta)$. Since $\Ker(\vartheta) \normalsubgroup G$, we have $\Ker(\vartheta) = \{1\}$ or $\Ker(\vartheta) = G$. If $\Ker(\vartheta) = G$, then $g\vartheta=1$ for all $g \in G$. Since $\vartheta$ is surjective, $H = \Im(\vartheta) = \{g\vartheta \mid g \in G\} = \{1\}$, a contradiction. Therefore, $\Ker(\vartheta)=\{1\}$. Hence, we have $g_1g_2^{-1}=1$, which implies $g_1=g_2$. So $\vartheta$ is injective and thus is bijective. \epf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
