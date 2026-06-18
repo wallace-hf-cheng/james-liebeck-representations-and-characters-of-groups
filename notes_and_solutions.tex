@@ -1,0 +1,150 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsfonts, amssymb, amsmath, amsthm}
+\usepackage{tikz}
+\usepackage{minted}
+
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Image}{Im}
+\DeclareMathOperator{\GeneralLinear}{GL}
+
+\renewcommand{\Im}{\Image}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\lt}{\left}
+\newcommand{\rt}{\right}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\GL}[2]{\GeneralLinear(#1,#2)}
+\newcommand{\normalsubgroup}{\lhd}
+\newcommand{\cyclic}[1]{\langle #1 \rangle}
+\newcommand{\isom}{\cong}
+\newcommand{\epf}{\hfill \qed}
+\newcommand{\chap}[1]{
+\section*{#1}
+\addcontentsline{toc}{section}{#1}
+}
+\newcommand{\ex}[1]{
+\subsection*{#1}
+\addcontentsline{toc}{subsection}{#1}
+}
+
+\begin{document}
+
+\tableofcontents
+
+\chap{Chapter 1 Groups and Homomorphisms}
+
+\ex{Exercise 1}
+
+Let $N$ be a subgroup of $G$ and $g \in G$. Then $g^{-1}Ng = \{g^{-1}ng \mid n \in N\} = \{g^{-1}gn \mid n \in N\} = \{n \mid n \in N\} = N$ because $G$ is abelian. So any subgroup of $G$ is normal. Since $G$ is simple, the only subgroups of $G$ are $\{1\}$ and $G$. Also, using the fact that $G$ is simple we can assume that $G \neq \{1\}$. Choose $h \in G \setminus \{1\}$. Since $\cyclic{h}$ is a subgroup of $G$, $\cyclic{h} = G$ or $\cyclic{h} = \{1\}$. If $\cyclic{h} = \{1\}$, then $h=1$, a contradiction. Hence, $\cyclic{h} = G$, so $G$ is a cyclic group. Let $|G|=n$. Assume for contradiction that $n$ is not prime, so $n=ab$ for some $1<a,b<n$. Since $G$ is cyclic and $a$ is a factor of $n$, there exists $k \in G$ of order $a$. Since $|k|>1$, $k \neq 1$. By the above argument, we have $\cyclic{k}=G$. Therefore, $a = |k| = |\cyclic{k}| = |G| = n$, a contradiction. Hence, $G$ is cyclic of prime order. \epf
+
+\ex{Exercise 2}
+
+Assume $H \neq \{1\}$. Let $g_1, g_2 \in G$. Suppose $g_1\vartheta = g_2\vartheta$. Then $(g_1\vartheta)(g_2\vartheta)^{-1}=1$ and thus $(g_1g_2^{-1})\vartheta=1$. Hence $g_1g_2^{-1} \in \Ker(\vartheta)$. Since $\Ker(\vartheta) \normalsubgroup G$, we have $\Ker(\vartheta) = \{1\}$ or $\Ker(\vartheta) = G$. If $\Ker(\vartheta) = G$, then $g\vartheta=1$ for all $g \in G$. Since $\vartheta$ is surjective, $H = \Im(\vartheta) = \{g\vartheta \mid g \in G\} = \{1\}$, a contradiction. Therefore, $\Ker(\vartheta)=\{1\}$. Hence, we have $g_1g_2^{-1}=1$, which implies $g_1=g_2$. So $\vartheta$ is injective and thus is bijective. \epf
+
+\chap{Chapter 2 Vector Spaces and Linear Transformations}
+
+\ex{Exercise 3}
+
+Suppose $V = U \oplus W$. Clearly, $V=U+W$. Let $v \in U \cap W \subseteq V$. Then there exist unique $u \in U$ and $w \in W$ such that $v=u+w$. So $u+w \in U$ and $u+w \in W$. By the uniqueness of $u$ and $w$, we have $u+w=u$ and $u+w=w$, so $u=w=0$, and thus $v=0$. Hence, $U \cap W = \{0\}$.
+
+Now suppose $V=U+W$ and $U \cap W = \{0\}$. We want to prove that for any $v \in V$ there exist unique $u \in U$ and $w \in W$ such that $v=u+w$. Let $v \in V$. Suppose $u_1,u_2 \in U$ and $w_1,w_2 \in W$ satisfy $v=u_1+w_1=u_2+w_2$. Then $u_1-u_2=w_2-w_1$. Since $U$ and $W$ are subspaces, they are closed under vector addition and additive inverses, so $u_1-u_2 \in U$ and $w_2-w_1 \in W$, so $u_1-u_2=w_2-w_1 \in U \cap W$. Hence, $u_1-u_2=w_2-w_1=0$, and thus $u_1=u_2$ and $w_1=w_2$, proving the uniqueness of $u$ and $w$.
+
+Therefore, $V = U \oplus W$ if and only if $V=U+W$ and $U \cap W = \{0\}$. \epf
+
+\ex{Exercise 4}
+
+Suppose $V = U \oplus W$. Let $v \in V$. Then there exist unique $u \in U$ and $w \in W$ such that $v=u+w$. Since $u_1,\ldots,u_r$ is a basis of $U$, there exist unique $\lambda_1,\ldots,\lambda_r \in F$ such that $u = \lambda_1u_1 + \ldots + \lambda_ru_r$. Since $w_1,\ldots,w_s$ is a basis of $W$, there exist unique $\mu_1,\ldots,\mu_s \in F$ such that $w = \mu_1w_1 + \ldots + \mu_sw_s$. Therefore, there exist unique $\lambda_1,\ldots,\lambda_r,\mu_1,\ldots,\mu_s \in F$ such that $v=\lambda_1u_1+\ldots+\lambda_ru_r+\mu_1w_1+\ldots+\mu_sw_s$. Hence, $u_1,\ldots,u_r,w_1,\ldots,w_s$ is a basis of $V$.
+
+Now suppose $u_1,\ldots,u_r,w_1,\ldots,w_s$ is a basis of $V$. Let $v \in V$. Then there exist unique $\lambda_1,\ldots,\lambda_r,\mu_1,\ldots,\mu_s \in F$ such that $v = \lambda_1u_1 + \ldots + \lambda_ru_r + \mu_1w_1 + \ldots + \mu_sw_s$. Since $u_1,\ldots,u_r$ is a basis of $U$, there exists a unique $u \in U$ such that $u=\lambda_1u_1 + \ldots + \lambda_ru_r$. Since $w_1,\ldots,w_s$ is a basis of $W$, there exists a unique $w \in W$ such that $w = \mu_1w_1 + \ldots + \mu_sw_s$. Hence, there exist unique $u \in U$ and $w \in W$ such that $v=u+w$. So $V = U \oplus W$.
+
+Therefore, $V = U \oplus W$ if and only if $u_1,\ldots,u_r,w_1,\ldots,w_s$ is a basis of $V$. \epf
+
+\chap{Chapter 3 Group Representations}
+
+\ex{Exercise 1}
+
+Suppose $\rho$ is a representation of $G$ over $\C$. Then
+\begin{align*}
+    A^m &= (a \rho)^m \\
+    &= a^m \rho \\
+    &= 1 \rho \\
+    &= I.
+\end{align*}
+
+Now suppose $A^m=I$. Let $a^r,a^s \in G$, where $0 \leq r,s \leq m-1$. If $r+s \leq m-1$, then
+\begin{align*}
+    (a^ra^s) \rho &= a^{r+s} \rho \\
+    &= A^{r+s} \\
+    &= A^rA^s \\
+    &= (a^r)\rho (a^s)\rho.
+\end{align*}
+If $m \leq r+s \leq 2m-2$, then
+\begin{align*}
+    (a^ra^s) \rho &= a^{r+s} \rho \\
+    &= a^{r+s-m} \rho \\
+    &= A^{r+s-m} && \text{(note that } 0 \leq r+s-m \leq m-2 \leq m-1 \text{)} \\
+    &= A^r A^s A^{-m} \\
+    &= A^r A^s {(A^m)}^{-1} \\
+    &= (a^r) \rho (a^s) \rho I^{-1} \\
+    &= (a^r) \rho (a^s) \rho.
+\end{align*}
+Therefore, $\rho$ is a homomorphism, and hence a representation. \epf
+
+\ex{Exercise 4}
+
+Let $g \in G$. Note that $g \rho = I^{-1}(g \rho)I$ and $I$ is invertible. So $\rho$ is equivalent to $\rho$, proving (1).
+
+Suppose $\rho$ is equivalent to $\sigma$, so we have $g \sigma = T^{-1}(g \rho)T$ for some invertible matrix $T$. Then $g \rho = (T^{-1})^{-1}(g \sigma)T^{-1}$ and $T^{-1}$ is invertible, so $\sigma$ is equivalent to $\rho$, proving (2).
+
+Now suppose $\rho$ is equivalent to $\sigma$ and $\sigma$ is equivalent to $\tau$. We have $g \sigma = T^{-1}(g \rho)T$ and $g \tau = S^{-1}(g \sigma)S$ for some invertible matrices $T$ and $S$. Then $g \tau = S^{-1}T^{-1} (g \rho) TS = (TS)^{-1}(g\rho)TS$ and $TS$ is invertible, so $\rho$ is equivalent to $\tau$, proving (3). \epf
+
+\ex{Exercise 6}
+
+Let \[ A = \begin{pmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \] and \[ B = \begin{pmatrix} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{pmatrix}. \] Since $A^4=B^2=I$ and $B^{-1}AB=A^{-1}$, by Example 1.4, $\rho : D_8 \to \GL{3}{\R}$ defined by $(a^ib^j)\rho = A^iB^j$ is a homomorphism. So $\rho$ is a representation of $D_8$ of degree $3$.
+
+We can use the following Python code to compute the kernel of $\rho$.
+\begin{minted}[frame=lines, linenos, fontsize=\footnotesize]{python}
+import sympy as sp
+
+A = sp.Matrix([
+    [0, 1, 0],
+    [-1, 0, 0],
+    [0, 0, 1]
+])
+
+B = sp.Matrix([
+    [1, 0, 0],
+    [0, -1, 0],
+    [0, 0, 1]
+])
+
+print("Elements in the kernel ((i, j) means a^i b^j):")
+for i in range(4):
+    for j in range(2):
+        if (A**i) * (B**j) == sp.eye(3):
+            print(f"({i}, {j})")
+\end{minted}
+We get $\Ker(\rho) = \{a^0b^0\} = \{1\}$. Therefore, $\rho$ is faithful. \epf
+
+\ex{Exercise 7}
+
+By the first isomorphism theorem, $G/\Ker(\rho) \isom \Im(\rho) \leq \GL{1}{F} \isom F^\times$. Since $F^\times$ is abelian, $G/\Ker(\rho)$ is also abelian. \epf
+
+\ex{Exercise 8}
+
+The statement is false. A counter-example is the trivial representation of a non-abelian group. \epf
+
+
+
+
+
+
+
+\end{document}
