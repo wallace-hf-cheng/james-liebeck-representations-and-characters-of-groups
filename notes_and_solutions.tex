@@ -4,13 +4,16 @@
 \usepackage{amsfonts, amssymb, amsmath, amsthm}
 \usepackage{tikz}
 \usepackage{minted}
+\usepackage{hyperref}
 
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Image}{Im}
 \DeclareMathOperator{\GeneralLinear}{GL}
+\DeclareMathOperator{\id}{id}
 
 \renewcommand{\Im}{\Image}
 
+\newcommand{\mc}[1]{\mathcal{#1}}
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
 \newcommand{\floor}[1]{\lfloor #1 \rfloor}
 \newcommand{\lt}{\left}
@@ -37,20 +40,39 @@
 \begin{document}
 
 \tableofcontents
+\newpage
 
-\chap{Chapter 1 Groups and Homomorphisms}
+\chap{Chapter 1 Groups and homomorphisms}
 
-\ex{Exercise 1}
+\ex{Exercise 1.1}
 
 Let $N$ be a subgroup of $G$ and $g \in G$. Then $g^{-1}Ng = \{g^{-1}ng \mid n \in N\} = \{g^{-1}gn \mid n \in N\} = \{n \mid n \in N\} = N$ because $G$ is abelian. So any subgroup of $G$ is normal. Since $G$ is simple, the only subgroups of $G$ are $\{1\}$ and $G$. Also, using the fact that $G$ is simple we can assume that $G \neq \{1\}$. Choose $h \in G \setminus \{1\}$. Since $\cyclic{h}$ is a subgroup of $G$, $\cyclic{h} = G$ or $\cyclic{h} = \{1\}$. If $\cyclic{h} = \{1\}$, then $h=1$, a contradiction. Hence, $\cyclic{h} = G$, so $G$ is a cyclic group. Let $|G|=n$. Assume for contradiction that $n$ is not prime, so $n=ab$ for some $1<a,b<n$. Since $G$ is cyclic and $a$ is a factor of $n$, there exists $k \in G$ of order $a$. Since $|k|>1$, $k \neq 1$. By the above argument, we have $\cyclic{k}=G$. Therefore, $a = |k| = |\cyclic{k}| = |G| = n$, a contradiction. Hence, $G$ is cyclic of prime order. \epf
 
-\ex{Exercise 2}
+\ex{Exercise 1.2}
 
 Assume $H \neq \{1\}$. Let $g_1, g_2 \in G$. Suppose $g_1\vartheta = g_2\vartheta$. Then $(g_1\vartheta)(g_2\vartheta)^{-1}=1$ and thus $(g_1g_2^{-1})\vartheta=1$. Hence $g_1g_2^{-1} \in \Ker(\vartheta)$. Since $\Ker(\vartheta) \normalsubgroup G$, we have $\Ker(\vartheta) = \{1\}$ or $\Ker(\vartheta) = G$. If $\Ker(\vartheta) = G$, then $g\vartheta=1$ for all $g \in G$. Since $\vartheta$ is surjective, $H = \Im(\vartheta) = \{g\vartheta \mid g \in G\} = \{1\}$, a contradiction. Therefore, $\Ker(\vartheta)=\{1\}$. Hence, we have $g_1g_2^{-1}=1$, which implies $g_1=g_2$. So $\vartheta$ is injective and thus is bijective. \epf
 
-\chap{Chapter 2 Vector Spaces and Linear Transformations}
+\chap{Chapter 2 Vector spaces and linear transformations}
 
-\ex{Exercise 3}
+\ex{Exercise 2.1}
+
+Let $w,w' \in W$ and $\lambda \in F$. Since $\vartheta$ is invertible, $\vartheta$ is surjective, so there exist $v,v' \in V$ such that $v \vartheta = w$ and $v' \vartheta = w'$. Then we have $v=w\vartheta^{-1}$ and $v'=w'\vartheta^{-1}$. Note that
+\begin{align*}
+    (w+w') \vartheta^{-1} &= (v\vartheta + v'\vartheta)\vartheta^{-1} \\
+    &= ((v+v')\vartheta)\vartheta^{-1} \\
+    &= v+v' \\
+    &= w\vartheta^{-1} + w'\vartheta^{-1}.
+\end{align*}
+Also, note that
+\begin{align*}
+    (\lambda w)\vartheta^{-1} &= (\lambda(v\vartheta))\vartheta^{-1} \\
+    &= ((\lambda v)\vartheta)\vartheta^{-1} \\
+    &= \lambda v \\
+    &= \lambda (w \vartheta^{-1}).
+\end{align*}
+Therefore, $\vartheta^{-1}$ is a linear transformation. \epf
+
+\ex{Exercise 2.3}
 
 Suppose $V = U \oplus W$. Clearly, $V=U+W$. Let $v \in U \cap W \subseteq V$. Then there exist unique $u \in U$ and $w \in W$ such that $v=u+w$. So $u+w \in U$ and $u+w \in W$. By the uniqueness of $u$ and $w$, we have $u+w=u$ and $u+w=w$, so $u=w=0$, and thus $v=0$. Hence, $U \cap W = \{0\}$.
 
@@ -58,7 +80,7 @@ Now suppose $V=U+W$ and $U \cap W = \{0\}$. We want to prove that for any $v \in
 
 Therefore, $V = U \oplus W$ if and only if $V=U+W$ and $U \cap W = \{0\}$. \epf
 
-\ex{Exercise 4}
+\ex{Exercise 2.4} \label{ex2.4}
 
 Suppose $V = U \oplus W$. Let $v \in V$. Then there exist unique $u \in U$ and $w \in W$ such that $v=u+w$. Since $u_1,\ldots,u_r$ is a basis of $U$, there exist unique $\lambda_1,\ldots,\lambda_r \in F$ such that $u = \lambda_1u_1 + \ldots + \lambda_ru_r$. Since $w_1,\ldots,w_s$ is a basis of $W$, there exist unique $\mu_1,\ldots,\mu_s \in F$ such that $w = \mu_1w_1 + \ldots + \mu_sw_s$. Therefore, there exist unique $\lambda_1,\ldots,\lambda_r,\mu_1,\ldots,\mu_s \in F$ such that $v=\lambda_1u_1+\ldots+\lambda_ru_r+\mu_1w_1+\ldots+\mu_sw_s$. Hence, $u_1,\ldots,u_r,w_1,\ldots,w_s$ is a basis of $V$.
 
@@ -66,9 +88,23 @@ Now suppose $u_1,\ldots,u_r,w_1,\ldots,w_s$ is a basis of $V$. Let $v \in V$. Th
 
 Therefore, $V = U \oplus W$ if and only if $u_1,\ldots,u_r,w_1,\ldots,w_s$ is a basis of $V$. \epf
 
-\chap{Chapter 3 Group Representations}
+\ex{Exercise 2.6}
 
-\ex{Exercise 1}
+We use induction on $r$. Suppose $r=1$. Then $V=U_1$, so $\dim V = \dim U_1$. Let $k \in \N$. Suppose $V = U_1 \oplus \ldots \oplus U_k$ implies $\dim V = \dim U_1 + \ldots + \dim U_k$. Consider $r=k+1$. Then $V = U_1 \oplus \ldots U_k \oplus U_{k+1}$. Let $W = U_1 \oplus \ldots \oplus U_k$. By the induction hypothesis, $\dim W = \dim U_1 + \ldots + \dim U_k$. Since $V = W \oplus U_{k+1}$, by \hyperref[ex2.4]{Exercise 2.4}, $\dim V = \dim W + \dim U_{k+1}$. Hence, $\dim V = \dim U_1 + \ldots + \dim U_k + \dim U_{k+1}$. By induction, $V = U_1 \oplus \ldots \oplus U_r$ implies $\dim V = \dim U_1 + \ldots + \dim U_r$ for any $r \in \N$. \epf
+
+\ex{Exercise 2.7}
+
+Consider $V = \R^2$, $\vartheta : \R^2 \to \R^2$ defined by $(v_1,v_2)\vartheta = (v_1,0)$ and $\phi : \R^2 \to \R^2$ defined by $(v_1,v_2)\phi = (v_2,0)$. Note that
+\begin{align*}
+    (v_1,v_2)\vartheta^2 &= (v_1,0)\vartheta \\
+    &= (v_1,0) \\
+    &= (v_1,v_2)\vartheta,
+\end{align*}
+so $\vartheta^2 = \vartheta$. Hence, $\vartheta$ is a projection. By Proposition 2.32, $V = \Im\vartheta \oplus \Ker\vartheta$. Note that $(v_1,v_2)\phi = (0,0)$ if and only if $v_2=0$. So $\Ker\phi = \{(v,0) \mid v \in \R\}$. Also, we have $\Im\phi = \{(v,0) \mid v \in \R\} = \Ker\phi$. Since $\Im\phi + \Ker\phi = \{(v,0) \mid v \in \R\}$, we have $(0,1) \in V$ but $(0,1) \notin \Im\phi + \Ker\phi$, so $V \neq \Im\phi + \Ker\phi$, and thus $V \neq \Im\phi \oplus \Ker\phi$. \epf
+
+\chap{Chapter 3 Group representations}
+
+\ex{Exercise 3.1} \label{ex3.1}
 
 Suppose $\rho$ is a representation of $G$ over $\C$. Then
 \begin{align*}
@@ -97,7 +133,11 @@ If $m \leq r+s \leq 2m-2$, then
 \end{align*}
 Therefore, $\rho$ is a homomorphism, and hence a representation. \epf
 
-\ex{Exercise 4}
+\ex{Exercise 3.2}
+
+Since $A^3 = B^3 = C^3 = I$, by \hyperref[ex3.1]{Exercise 3.1}, $\rho_1,\rho_2,\rho_3$ are representations of $G$ over $\C$. By computing the powers of the matrices, we have $\Ker\rho_1 = G$, $\Ker\rho_2 = \{a^0\} = \{1\}$ and $\Ker\rho_3 = \{a^0\} = \{1\}$. Therefore, $\rho_2$ and $\rho_3$ are faithful, but $\rho_1$ is not. \epf
+
+\ex{Exercise 3.4}
 
 Let $g \in G$. Note that $g \rho = I^{-1}(g \rho)I$ and $I$ is invertible. So $\rho$ is equivalent to $\rho$, proving (1).
 
@@ -105,7 +145,7 @@ Suppose $\rho$ is equivalent to $\sigma$, so we have $g \sigma = T^{-1}(g \rho)T
 
 Now suppose $\rho$ is equivalent to $\sigma$ and $\sigma$ is equivalent to $\tau$. We have $g \sigma = T^{-1}(g \rho)T$ and $g \tau = S^{-1}(g \sigma)S$ for some invertible matrices $T$ and $S$. Then $g \tau = S^{-1}T^{-1} (g \rho) TS = (TS)^{-1}(g\rho)TS$ and $TS$ is invertible, so $\rho$ is equivalent to $\tau$, proving (3). \epf
 
-\ex{Exercise 6}
+\ex{Exercise 3.6}
 
 Let \[ A = \begin{pmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \] and \[ B = \begin{pmatrix} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{pmatrix}. \] Since $A^4=B^2=I$ and $B^{-1}AB=A^{-1}$, by Example 1.4, $\rho : D_8 \to \GL{3}{\R}$ defined by $(a^ib^j)\rho = A^iB^j$ is a homomorphism. So $\rho$ is a representation of $D_8$ of degree $3$.
 
@@ -133,13 +173,114 @@ for i in range(4):
 \end{minted}
 We get $\Ker(\rho) = \{a^0b^0\} = \{1\}$. Therefore, $\rho$ is faithful. \epf
 
-\ex{Exercise 7}
+\ex{Exercise 3.7}
 
 By the first isomorphism theorem, $G/\Ker(\rho) \isom \Im(\rho) \leq \GL{1}{F} \isom F^\times$. Since $F^\times$ is abelian, $G/\Ker(\rho)$ is also abelian. \epf
 
-\ex{Exercise 8}
+\ex{Exercise 3.8}
 
 The statement is false. A counter-example is the trivial representation of a non-abelian group. \epf
+
+\chap{Chapter 4 $FG$-modules}
+
+\ex{Exercise 4.1}
+
+Note that
+\begin{alignat*}{3}
+    v_1 \id = v_1, & \hspace{4em} v_2 \id = v_2, & \hspace{4em} v_3 \id = v_3, \\
+    v_1 \begin{pmatrix} 1 & 2 \end{pmatrix} = v_2, & \hspace{4em} v_2 \begin{pmatrix} 1 & 2 \end{pmatrix} = v_1, & \hspace{4em} v_3 \begin{pmatrix} 1 & 2 \end{pmatrix} = v_3, \\
+    v_1 \begin{pmatrix} 2 & 3 \end{pmatrix} = v_1, & \hspace{4em} v_2 \begin{pmatrix} 2 & 3 \end{pmatrix} = v_3, & \hspace{4em} v_3 \begin{pmatrix} 2 & 3 \end{pmatrix} = v_2, \\
+    v_1 \begin{pmatrix} 1 & 3 \end{pmatrix} = v_3, & \hspace{4em} v_2 \begin{pmatrix} 1 & 3 \end{pmatrix} = v_2, & \hspace{4em} v_3 \begin{pmatrix} 1 & 3 \end{pmatrix} = v_1, \\
+    v_1 \begin{pmatrix} 1 & 2 & 3 \end{pmatrix} = v_2, & \hspace{4em} v_2 \begin{pmatrix} 1 & 2 & 3 \end{pmatrix} = v_3, & \hspace{4em} v_3 \begin{pmatrix} 1 & 2 & 3 \end{pmatrix} = v_1, \\
+    v_1 \begin{pmatrix} 1 & 3 & 2 \end{pmatrix} = v_3, & \hspace{4em} v_2 \begin{pmatrix} 1 & 3 & 2 \end{pmatrix} = v_1, & \hspace{4em} v_3 \begin{pmatrix} 1 & 3 & 2 \end{pmatrix} = v_2.
+\end{alignat*}
+Therefore,
+\begin{alignat*}{2}
+    [\id]_{\mc{B}_1} = \begin{pmatrix} 1&0&0 \\ 0&1&0 \\ 0&0&1 \end{pmatrix}, & \hspace{4em} [\begin{pmatrix} 1&2 \end{pmatrix}]_{\mc{B}_1} = \begin{pmatrix} 0&1&0 \\ 1&0&0 \\ 0&0&1 \end{pmatrix}, \\
+    [\begin{pmatrix} 2&3 \end{pmatrix}]_{\mc{B}_1} = \begin{pmatrix} 1&0&0 \\ 0&0&1 \\ 0&1&0 \end{pmatrix}, & \hspace{4em} [\begin{pmatrix} 1&3 \end{pmatrix}]_{\mc{B}_1} = \begin{pmatrix} 0&0&1 \\ 0&1&0 \\ 1&0&0 \end{pmatrix}, \\
+    [\begin{pmatrix} 1&2&3 \end{pmatrix}]_{\mc{B}_1} = \begin{pmatrix} 0&1&0 \\ 0&0&1 \\ 1&0&0 \end{pmatrix}, & \hspace{4em} [\begin{pmatrix} 1&3&2 \end{pmatrix}]_{\mc{B}_1} = \begin{pmatrix} 0&0&1 \\ 1&0&0 \\ 0&1&0 \end{pmatrix}.
+\end{alignat*}
+Let $u_1=v_1+v_2+v_3$, $u_2=v_1-v_2$ and $u_3=v_1-v_3$. Let $T$ be the change of basis matrix from $\mc{B}_1$ to $\mc{B}_2$. Then \[ T = \begin{pmatrix} 1&1&1 \\ 1&-1&0 \\ 1&0&-1 \end{pmatrix} \] and $[g]_{\mc{B}_1} = T^{-1}[g]_{\mc{B}_2}T$. So $[g]_{\mc{B}_2} = T[g]_{\mc{B}_1}T^{-1}$. We can use the following Python code to compute $[g]_{\mc{B}_2}$ for each $g \in G$.
+\begin{minted}[frame=lines, linenos, fontsize=\footnotesize]{python}
+import sympy as sp
+
+matrices_B1 = [
+    sp.Matrix([
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1]
+    ]),
+    sp.Matrix([
+        [0, 1, 0],
+        [1, 0, 0],
+        [0, 0, 1]
+    ]),
+    sp.Matrix([
+        [1, 0, 0],
+        [0, 0, 1],
+        [0, 1, 0]
+    ]),
+    sp.Matrix([
+        [0, 0, 1],
+        [0, 1, 0],
+        [1, 0, 0]
+    ]),
+    sp.Matrix([
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 0, 0]
+    ]),
+    sp.Matrix([
+        [0, 0, 1],
+        [1, 0, 0],
+        [0, 1, 0]
+    ])
+]
+
+T = sp.Matrix([
+    [1, 1, 1],
+    [1, -1, 0],
+    [1, 0, -1]
+])
+
+matrices_B2 = [ T * A * T.inv() for A in matrices_B1 ]
+
+for A in matrices_B2:
+    sp.pprint(A)
+    print()
+\end{minted}
+We obtain
+\begin{alignat*}{2}
+    [\id]_{\mc{B}_2} = \begin{pmatrix} 1&0&0 \\ 0&1&0 \\ 0&0&1 \end{pmatrix}, & \hspace{4em} [\begin{pmatrix} 1&2 \end{pmatrix}]_{\mc{B}_2} = \begin{pmatrix} 1&0&0 \\ 0&-1&0 \\ 0&-1&1 \end{pmatrix}, \\
+    [\begin{pmatrix} 2&3 \end{pmatrix}]_{\mc{B}_2} = \begin{pmatrix} 1&0&0 \\ 0&0&1 \\ 0&1&0 \end{pmatrix}, & \hspace{4em} [\begin{pmatrix} 1&3 \end{pmatrix}]_{\mc{B}_2} = \begin{pmatrix} 1&0&0 \\ 0&1&-1 \\ 0&0&-1 \end{pmatrix}, \\
+    [\begin{pmatrix} 1&2&3 \end{pmatrix}]_{\mc{B}_2} = \begin{pmatrix} 1&0&0 \\ 0&-1&1 \\ 0&-1&0 \end{pmatrix}, & \hspace{4em} [\begin{pmatrix} 1&3&2 \end{pmatrix}]_{\mc{B}_2} = \begin{pmatrix} 1&0&0 \\ 0&0&-1 \\ 0&1&-1 \end{pmatrix}.
+\end{alignat*}
+Notice that the first row of $[g]_{\mc{B}_2}$ is always $\begin{pmatrix} 1&0&0 \end{pmatrix}$. This implies $u_1g = u_1$ for any $g \in G$. \epf
+
+\ex{Exercise 4.2}
+
+Let $\lambda \in F$, $u,v \in V$ and $g,h \in G$. Note that $-v \in V$, so $vg \in V$. So axiom (1) holds. Since $1$ is an even permutation, we have $v1=v$, so axiom (3) also holds.
+
+To verify axiom (4), we first assume $g$ is even. Then we have \[(\lambda v)g = \lambda v = \lambda (vg).\] Next, we assume $g$ is odd. Then we have \[(\lambda v)g = -(\lambda v) = \lambda(-v) = \lambda(vg).\] Hence, axiom (4) holds.
+
+Next, we verify axiom (5). We first assume $g$ is even. Thus, \[(u+v)g = u+v = ug + vg.\] Now, we assume $g$ is odd. Thus, \[(u+v)g = -(u+v) = (-u) + (-v) = ug + vg.\] So axiom (5) holds.
+
+Finally, we verify axiom (2). First, we assume both $g$ and $h$ are even. Then $gh$ is even. So \[ v(gh) = v = vg = (vg)h. \] Next, we assume $g$ is even and $h$ is odd. Then $gh$ is odd. So \[ v(gh) = -v = -(vg) = (vg)h. \] Then, we assume $g$ is odd and $h$ is even. Then $gh$ is odd. So \[ v(gh) = -v = vg = (vg)h. \] Lastly, we assume both $g$ and $h$ are odd. Then $gh$ is even. So \[ v(gh) = v = -(-v) = -(vg) = (vg)h. \] Hence, axiom (2) holds.
+
+Therefore, $V$ is an $FG$-module. \epf
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
